@@ -52,7 +52,6 @@ function getCircleCircumference(radius) {
  *  -3, 3  => 0
  */
 function getAverage(value1, value2) {
-  console.log(value1, value2, Number.MAX_VALUE);
   if (value1 === Number.MAX_VALUE && value2 === Number.MAX_VALUE) {
     return value1;
   }
