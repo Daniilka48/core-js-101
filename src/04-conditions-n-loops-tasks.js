@@ -310,8 +310,12 @@ function isCreditCardNumber(ccn) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  let result = num;
+  while (result > 9) {
+    result = result.toString().split('').reduce((sum, digit) => sum + parseInt(digit, 10), 0);
+  }
+  return result;
 }
 
 
@@ -336,8 +340,23 @@ function getDigitalRoot(/* num */) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const Array = [];
+  const Brackets = {
+    '(': ')', '{': '}', '[': ']', '<': '>',
+  };
+  function checkChar(char) {
+    if (Brackets[char]) {
+      Array.push(char);
+    } else {
+      const last = Array.pop();
+      if (Brackets[last] !== char) {
+        Array.push(last);
+      }
+    }
+  }
+  str.split('').forEach(checkChar);
+  return Array.length === 0;
 }
 
 
@@ -361,8 +380,8 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  return num.toString(n);
 }
 
 
@@ -378,8 +397,14 @@ function toNaryString(/* num, n */) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  let commonPath = pathes[0];
+  for (let i = 1; i < pathes.length; i += 1) {
+    while (!pathes[i].startsWith(commonPath)) {
+      commonPath = commonPath.slice(0, -1);
+    }
+  }
+  return commonPath.slice(0, commonPath.lastIndexOf('/') + 1);
 }
 
 
@@ -401,8 +426,16 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const result = Array.from({ length: m1.length }, () => Array(m2[0].length).fill(0));
+  for (let i = 0; i < m1.length; i += 1) {
+    for (let j = 0; j < m2[0].length; j += 1) {
+      for (let k = 0; k < m1[0].length; k += 1) {
+        result[i][j] += m1[i][k] * m2[k][j];
+      }
+    }
+  }
+  return result;
 }
 
 
